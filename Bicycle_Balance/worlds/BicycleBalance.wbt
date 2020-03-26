@@ -1,0 +1,247 @@
+#VRML_SIM R2019b utf8
+WorldInfo {
+  basicTimeStep 10
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.334461035126111 0.9084034302916606 0.2508765110900471 4.878791607748404
+  position 3.520924329968853 6.531806154418472 3.816806178784482
+  follow "robot:solid"
+  followOrientation TRUE
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 300 300
+  floorTileSize 5 5
+  wallHeight 0.001
+}
+Robot {
+  translation 11.809999999999999 0.8999999999999999 -0.02
+  children [
+    Solid {
+      children [
+        DEF body Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 1
+            metalness 0
+          }
+          geometry Capsule {
+            height 0.4
+            radius 0.15
+          }
+        }
+      ]
+      boundingObject USE body
+      physics Physics {
+        density -1
+        mass 0.01
+      }
+    }
+    Solid {
+      translation 0.25 -0.2 0
+      rotation 0 0 1 -1.5708003061004252
+      children [
+        DEF b1 Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Capsule {
+            height 0.5
+            radius 0.03
+          }
+        }
+        Transform {
+          translation 0 0.25 0
+          children [
+            HingeJoint {
+              jointParameters HingeJointParameters {
+              }
+              device [
+                RotationalMotor {
+                  name "direction motor"
+                  maxVelocity 1000
+                  maxTorque 1000
+                }
+              ]
+              endPoint Solid {
+                translation 0.2 0 0
+                rotation -8.363962322042128e-09 8.363990484426202e-09 0.9999999999999998 1.5707996938995747
+                children [
+                  DEF b2 Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 1 0
+                      metalness 0
+                    }
+                    geometry Capsule {
+                      height 0.4
+                      radius 0.03
+                    }
+                  }
+                  Transform {
+                    translation 0 -0.2 0
+                    children [
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          position 3
+                          axis 0 0 1
+                        }
+                        endPoint Solid {
+                          rotation -1 1.3738285884379177e-16 8.831755211386614e-17 1.570799693899573
+                          children [
+                            DEF vczh1 Shape {
+                              appearance PBRAppearance {
+                                baseColorMap ImageTexture {
+                                  url [
+                                    "timg.png"
+                                  ]
+                                }
+                                metalness 0
+                              }
+                              geometry Cylinder {
+                                height 0.01
+                                radius 0.3
+                              }
+                            }
+                          ]
+                          boundingObject USE vczh1
+                          physics Physics {
+                            density -1
+                            mass 0.01
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+                boundingObject USE b2
+                physics Physics {
+                  density -1
+                  mass 0.01
+                }
+              }
+            }
+          ]
+        }
+      ]
+      name "solid(1)"
+      boundingObject USE b1
+      physics Physics {
+        density -1
+        mass 0.01
+      }
+    }
+    Solid {
+      translation -0.25 -0.4 0
+      rotation 0 0 1 -0.89
+      children [
+        DEF b3 Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Capsule {
+            height 0.64
+            radius 0.03
+          }
+        }
+        Transform {
+          translation 0 -0.32 0
+          children [
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                axis 0 0 -1
+              }
+              device [
+                RotationalMotor {
+                  name "driver motor"
+                  acceleration 12
+                  maxVelocity 1000
+                  maxTorque 1000
+                }
+              ]
+              endPoint Solid {
+                rotation 1 0 0 1.5707996938995747
+                children [
+                  DEF vczh2 Shape {
+                    appearance PBRAppearance {
+                      baseColorMap ImageTexture {
+                        url [
+                          "timg.png"
+                        ]
+                      }
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.01
+                      radius 0.3
+                    }
+                  }
+                ]
+                boundingObject USE vczh2
+                physics Physics {
+                  density -1
+                  mass 0.01
+                }
+              }
+            }
+          ]
+        }
+      ]
+      name "solid(2)"
+      boundingObject USE b3
+      physics Physics {
+        density -1
+        mass 0.01
+      }
+    }
+    InertialUnit {
+      boundingObject USE body
+      physics Physics {
+        density -1
+        mass 0.01
+      }
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+    density -1
+    mass 65
+    centerOfMass [
+      0 0.2 0
+    ]
+  }
+  controller "Bicycle_Controller"
+}
+StraightRoadSegment {
+  translation 0 0.01 0
+  rotation 0 1 0 1.5707996938995747
+  width 4
+  numberOfLanes 3
+  length 15
+}
+StraightRoadSegment {
+  translation 19 0.01 19
+  rotation 0 1 0 3.141592653589793
+  name "road(2)"
+  width 4
+  numberOfLanes 3
+  length 15
+}
+CurvedRoadSegment {
+  translation 15 0.01 4
+  rotation 0 1 0 1.5708003061004252
+  name "road(1)"
+  width 4
+  numberOfLanes 3
+  curvatureRadius 4
+}
